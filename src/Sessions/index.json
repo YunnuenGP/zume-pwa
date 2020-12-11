@@ -15,6 +15,15 @@
     "09.json",
     "10.json"
   ],
+  "sections": 
+              [ 
+                { "description": "Start A Discipleship Group", 
+                  "sessions": [    "01.json",    "02.json",    "03.json",    "04.json",    "05.json" ]
+                },
+                { "description": "Teach A Discipleship Group", 
+                  "sessions": [    "06.json",    "07.json",    "08.json",    "09.json",    "10.json" ]
+                }
+  ],  
   "precachePublicAssets": [
     { "url": "/favicon.png", "revision": "3870" },
     { "url": "/favicon_512.png", "revision": "147129" },

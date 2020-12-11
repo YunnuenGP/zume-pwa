@@ -63,8 +63,32 @@ export const selectSession = createSelector(
 
 // TODO find a better way to specify id that can be consistently used
 // NOTE the technique here is used in other selectors in this file too...
-export const getSessionTitles = createSelector([selectSessions], sessions => {
-  return sessions.content.map((s, i) => ({ id: `${i}`, title: s.t }));
+export const getSessionTitles = createSelector([selectSessions], ({content}) => {  
+  return content.map((s, i) => ({ id: `${i}`, title: s.t }));
+});
+
+export const getSectionTitles = createSelector([selectSessions], () => {
+  return sessions.sections && 
+         sessions.sections.map((s, i) => ({ id: `${i}`, title: s.description, sessions: s.sessions }));
+});
+
+export const getSessionsFromSections = createSelector([selectSessions], ({content}) => {
+  const result = [];
+  const sessionsArray = content.map((s, i) => ({ id: `${i}`, title: s.t }));
+  let lastIndex = 0;
+  if(sessions.sections){    
+    sessions.sections.forEach((section) => {
+      result.push(sessionsArray.slice(lastIndex, (section.sessions.length + lastIndex)));
+      lastIndex = section.sessions.length;
+    });
+  }
+  return result;
+});
+
+export const getPathsFromSections = createSelector([selectSessions], sessions => {  
+  return sessions.meta.sections && 
+         sessions.meta.sections.map((section) => (section.sessions))
+         .flat();
 });
 
 export const getSessionPaths = createSelector([selectSessions], sessions => {
@@ -227,7 +251,8 @@ export const selectSessionAssets = createSelector([selectSession], session => {
 export function loadSessions() {
   return async (dispatch, getState) => {
     try {
-      const paths = getSessionPaths(getState());
+      const paths = getPathsFromSections(getState()) || getSessionPaths(getState());
+
       dispatch(sessionsContentLoading());
 
       // dynamically load about content
@@ -240,7 +265,8 @@ export function loadSessions() {
       // dynamically load session content
       const content = await Promise.all(
         paths.map(p => import(`Sessions/${p}`))
-      );
+      ); 
+
       // NOTE since we are importing, we get back ES6 modules
       // but we can only persist JSON objects, so the following does so
       // TODO find an alternative way to do this that doesn't

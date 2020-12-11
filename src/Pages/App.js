@@ -5,10 +5,21 @@ import ZumeInstallBanner from 'Components/zume/ZumeInstallBanner';
 import ZumeLogo from 'Components/zume/ZumeLogo';
 import { useSelector } from 'react-redux';
 import SessionGridList from 'Components/shared/session/SessionGridList';
-import { getSessionTitles } from 'Redux/sessions';
+import { getSectionTitles, getSessionTitles } from 'Redux/sessions';
+
 
 function App() {
-  const titles = useSelector(getSessionTitles);
+  const sectionTitles = useSelector(getSectionTitles);
+  const sessionTitles = useSelector(getSessionTitles);
+  let titles, baseUrl;
+
+  if (sectionTitles && sectionTitles.length > 0){
+    titles = sectionTitles;
+    baseUrl = 'section';    
+  } else {
+    titles = sessionTitles;
+    baseUrl = 'session';
+  }
 
   return (
     <Container bgcolor="white" component="main" maxWidth="md">
@@ -27,7 +38,7 @@ function App() {
             </Box>
           </header>
           <br />
-          <SessionGridList sessions={titles} variant="wrapped" animate={true} />
+          <SessionGridList sessions={titles} baseUrl={baseUrl} variant="wrapped" animate={true} />
           <br />
         </div>
       </Box>
