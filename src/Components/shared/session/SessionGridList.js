@@ -48,6 +48,7 @@ export default function SessionGridList({
   selectedId,
   variant,
   animate,
+  baseUrl,
 }) {
   const classes = useStyles();
   const theme = useTheme();
@@ -81,12 +82,13 @@ export default function SessionGridList({
           tileClass = clsx(classes.tile, classes.unselectedTile);
         }
         if (!selectedId || s.id !== selectedId) {
-          return <SessionGridListItem key={s.id} s={s} className={tileClass} />;
+          return <SessionGridListItem key={s.id} s={s} url={baseUrl} className={tileClass} />;
         } else {
           return (
             <SessionGridListItem
               key={s.id}
               s={s}
+              url={baseUrl}
               className={tileClass}
               ref={tileRef}
             />
@@ -112,12 +114,13 @@ export default function SessionGridList({
   }
 }
 
-const SessionGridListItem = React.forwardRef(({ key, s, className }, ref) => {
-  const href = useBasenameUrl(`/session/${s.id}`);
+const SessionGridListItem = React.forwardRef(({ key, s, url, className }, ref) => {
+  const href = useBasenameUrl(`/${url}/${s.id}`);
   const t = useAppTranslation();
   const navigation = useNavigation();
+
   return (
-    <GridListTile key={key}>
+    <GridListTile key={s.id}>
       <Box
         ref={ref}
         onClick={() => {

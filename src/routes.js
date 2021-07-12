@@ -9,6 +9,7 @@ import Sessions from 'Pages/Sessions';
 import LiveSession from 'Pages/LiveSession';
 import Downloads from 'Pages/Downloads';
 import About from 'Pages/About';
+import Sections from 'Pages/Sections'
 
 /**
  * Tentative route structure:
@@ -38,6 +39,10 @@ const toMount = {
   '/session/:id': route(async req => {
     let id = req.params.id;
     return { title: 'Sessions', view: <Sessions selectedId={id} /> };
+  }),
+  '/section/:id': route(async req => {
+    let id = req.params.id;
+    return { title: 'Sessions', view: <Sections selectedId={id} /> };
   }),
   '/downloads': route({
     title: 'Downloads',
