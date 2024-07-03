@@ -133,6 +133,13 @@
     "rtl": false
   },
   {
+    "enDisplayName": "Kurdish",
+    "code": "ku",
+    "locale": "ku",
+    "nativeName": "کوردی",
+    "rtl": true
+  },
+  {
     "enDisplayName": "Lao",
     "code": "lo",
     "locale": "lo",
@@ -173,6 +180,13 @@
     "code": "ml",
     "locale": "ml_IN",
     "nativeName": "മലയാളം",
+    "rtl": false
+  },
+  {
+    "enDisplayName": "Nepali",
+    "code": "ne",
+    "locale": "ne_NP",
+    "nativeName": "नेपाली",
     "rtl": false
   },
   {
@@ -257,6 +271,13 @@
     "code": "th",
     "locale": "th_TH",
     "nativeName": "ไทย",
+    "rtl": false
+  },
+  {
+    "enDisplayName": "Turkish",
+    "code": "tr",
+    "locale": "tr_TR",
+    "nativeName": "Türkçe",
     "rtl": false
   },
   {
